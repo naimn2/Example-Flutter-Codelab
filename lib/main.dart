@@ -206,12 +206,28 @@ class FavoritesPage extends StatelessWidget {
           child: Text('You have '
               '${appState.favorites.length} favorites:'),
         ),
-        for (var pair in appState.favorites)
-          ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text(pair.asLowerCase),
-          ),
+        ..._getListFavoriteTiles(context, appState.favorites),
       ],
     );
+  }
+
+  List<Widget> _getListFavoriteTiles(
+      BuildContext context, List<WordPair> favorites) {
+    List<Widget> favoriteTiles = [];
+    for (var i = 0; i < favorites.length; i++) {
+      favoriteTiles.add(
+        GestureDetector(
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(favorites[i].asPascalCase)));
+          },
+          child: ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text(favorites[i].asLowerCase),
+          ),
+        ),
+      );
+    }
+    return favoriteTiles;
   }
 }
