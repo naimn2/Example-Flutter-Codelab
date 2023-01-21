@@ -3,17 +3,39 @@ import 'package:provider/provider.dart';
 
 import 'my_app_state.dart';
 
-class GeneratorPage extends StatelessWidget {
+class GeneratorPage extends StatefulWidget {
+  @override
+  State<GeneratorPage> createState() => _GeneratorPageState();
+}
+
+class _GeneratorPageState extends State<GeneratorPage> {
+  bool hasLiked = false;
+
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
 
-    IconData icon;
-    if (appState.favorites.contains(pair)) {
-      icon = Icons.favorite;
+    appState.hasLiked(pair).then((value) {
+      if (hasLiked == value) return;
+      print('kocak gemingk');
+      setState(() {
+        hasLiked = value;
+      });
+    }).catchError((onError) {
+      print(onError);
+    });
+
+    var icon;
+
+    if (hasLiked) {
+      setState(() {
+        icon = Icons.favorite;
+      });
     } else {
-      icon = Icons.favorite_border;
+      setState(() {
+        icon = Icons.favorite_border;
+      });
     }
 
     return Center(
