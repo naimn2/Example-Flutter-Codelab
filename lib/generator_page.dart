@@ -26,16 +26,12 @@ class _GeneratorPageState extends State<GeneratorPage> {
       print(onError);
     });
 
-    var icon;
+    IconData? icon;
 
     if (hasLiked) {
-      setState(() {
-        icon = Icons.favorite;
-      });
+      icon = Icons.favorite;
     } else {
-      setState(() {
-        icon = Icons.favorite_border;
-      });
+      icon = Icons.favorite_border;
     }
 
     return Center(
